@@ -21,7 +21,6 @@ Route::get('/', function () {
 Route::get('/{any}', function () {
     $request = request();
     $url = 'https://fapi.binance.com/'.$request->path();
-    dd($url);
     $client = new GuzzleHttp\Client();
 
     $headers = [
