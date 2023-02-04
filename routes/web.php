@@ -18,16 +18,17 @@ Route::get('/', function () {
 });
 
 
-Route::get('/proxy', function () {
+Route::get('/{any}', function () {
     $request = request();
-    $url = $request->url;
+    $url = 'https://fapi.binance.com/'.$request->path();
+    dd($url);
+    $client = new GuzzleHttp\Client();
 
     $headers = [
         'User-Agent' => 'Your User Agent',
         // Tambahkan header lain yang diperlukan di sini
     ];
-
-    // Mengambil semua header dari request masuk
+    
     $headers = array_merge($headers, $request->headers->all());
 
     $options = [
@@ -36,8 +37,7 @@ Route::get('/proxy', function () {
         'query' => $request->query(),
     ];
 
-    $client = new GuzzleHttp\Client();
     $response = $client->request($request->method(), $url, $options);
-    
+
     return response($response->getBody()->getContents(), $response->getStatusCode(), $response->getHeaders());
-});
+})->where('any', '.*');
