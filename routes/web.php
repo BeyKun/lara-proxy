@@ -24,12 +24,15 @@ Route::get('/{any}', function () {
     $client = new GuzzleHttp\Client();
 
     $headers = [
-        'User-Agent' => 'Your User Agent',
+        'User-Agent' => 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36',
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json'
         // Tambahkan header lain yang diperlukan di sini
     ];
     
-    $headers = array_merge($headers, $request->headers->all());
-
+    $headers = array_merge($headers);
+    
+    // dd($headers);
     $options = [
         'headers' => $headers,
         'form_params' => $request->all(),
